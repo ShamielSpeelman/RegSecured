@@ -38,7 +38,7 @@ const clients = [
   { id: "CLI004", name: "Investment Partners LLC", type: "Corporate", riskRating: "High" },
 ]
 
-export default function ReviewRequestForm() {
+function ReviewRequestForm() {
   const [selectedClient, setSelectedClient] = useState("")
   const [selectedReviewType, setSelectedReviewType] = useState("")
   const [selectedReviewer, setSelectedReviewer] = useState("")
@@ -300,3 +300,5 @@ export default function ReviewRequestForm() {
     </div>
   )
 }
+
+export { default as ReviewRequestForm } from "./review-request-form"

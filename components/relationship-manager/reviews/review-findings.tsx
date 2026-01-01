@@ -83,7 +83,7 @@ const findingCategories = ["All", "KYC", "AML", "Risk Assessment", "Documentatio
 const severityLevels = ["All", "Critical", "High", "Medium", "Low"]
 const statusOptions = ["All", "Open", "In Progress", "Resolved", "Escalated"]
 
-export default function ReviewFindings() {
+const ReviewFindings = () => {
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [selectedSeverity, setSelectedSeverity] = useState("All")
@@ -156,7 +156,7 @@ export default function ReviewFindings() {
           <p className="text-gray-600">Manage and track review findings and remediation actions</p>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" className="flex items-center gap-2">
+          <Button variant="outline" className="flex items-center gap-2 bg-transparent">
             <Download className="h-4 w-4" />
             Export
           </Button>
@@ -345,3 +345,5 @@ export default function ReviewFindings() {
     </div>
   )
 }
+
+export { default as ReviewFindings } from "./review-findings"

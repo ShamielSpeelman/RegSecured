@@ -8,6 +8,8 @@
 import type { EntityType, OnboardingScenario, RelationshipRole } from "../../types/entity"
 import type { FormDefinition } from "../../types/form"
 
+export const FORM_DEFINITIONS: FormDefinition[] = []
+
 export class FormOrchestrator {
   /**
    * Get the workflow for a specific entity and scenario.

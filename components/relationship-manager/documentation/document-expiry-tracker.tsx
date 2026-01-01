@@ -74,7 +74,7 @@ const mockExpiringDocuments: ExpiringDocument[] = [
   },
 ]
 
-export default function DocumentExpiryTracker() {
+const DocumentExpiryTracker = () => {
   const [selectedDocuments, setSelectedDocuments] = useState<string[]>([])
   const [searchTerm, setSearchTerm] = useState("")
   const [statusFilter, setStatusFilter] = useState<string>("all")
@@ -315,3 +315,5 @@ export default function DocumentExpiryTracker() {
     </div>
   )
 }
+
+export { default as DocumentExpiryTracker } from "./document-expiry-tracker"

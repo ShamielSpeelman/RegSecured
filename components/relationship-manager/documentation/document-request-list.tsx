@@ -12,7 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Badge } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
 import { MoreHorizontal, Eye, Edit, Send, AlertCircle, CheckCircle, XCircle, Clock, FileText } from "lucide-react"
 
 // Mock data for document requests
@@ -209,7 +209,7 @@ const CategoryBadge = ({ category }: { category: string }) => {
   return <Badge className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${getCategoryColor()}`}>{category}</Badge>
 }
 
-export default function DocumentRequestList() {
+const DocumentRequestList = () => {
   const [selectedRequests, setSelectedRequests] = useState<string[]>([])
 
   const toggleSelectAll = () => {
@@ -245,7 +245,7 @@ export default function DocumentRequestList() {
               <Button variant="outline" size="sm">
                 Mark as Received
               </Button>
-              <Button variant="outline" size="sm" className="text-red-600 hover:text-red-700">
+              <Button variant="outline" size="sm" className="text-red-600 hover:text-red-700 bg-transparent">
                 Cancel
               </Button>
             </div>
@@ -363,3 +363,5 @@ export default function DocumentRequestList() {
     </div>
   )
 }
+
+export { DocumentRequestList }

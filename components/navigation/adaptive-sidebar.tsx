@@ -1,20 +1,20 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { ChevronLeft, ChevronRight, LogOut } from "lucide-react"
 import { getNavigationForRole, type NavigationItem } from "@/lib/navigation-config"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import { useAuth } from "@/lib/auth/auth-context"
 
 interface AdaptiveSidebarProps {
   userRole: string
   className?: string
 }
 
-// Get client profile for entity-aware navigation
 const getClientProfile = () => {
   if (typeof window === "undefined") return null
 
@@ -32,8 +32,9 @@ export function AdaptiveSidebar({ userRole, className }: AdaptiveSidebarProps) {
   const [hoveredItem, setHoveredItem] = useState<string | null>(null)
   const [clientProfile, setClientProfile] = useState<any>(null)
   const pathname = usePathname()
+  const { user, signOut } = useAuth()
+  const router = useRouter()
 
-  // Load client profile for entity-aware navigation
   useEffect(() => {
     if (userRole === "client") {
       const profile = getClientProfile()
@@ -41,7 +42,6 @@ export function AdaptiveSidebar({ userRole, className }: AdaptiveSidebarProps) {
     }
   }, [userRole])
 
-  // Get navigation based on role and entity type
   const navigation = getNavigationForRole(
     userRole,
     clientProfile?.entityType,
@@ -50,7 +50,6 @@ export function AdaptiveSidebar({ userRole, className }: AdaptiveSidebarProps) {
   )
 
   useEffect(() => {
-    // Auto-collapse on mobile
     const handleResize = () => {
       if (window.innerWidth < 768) {
         setIsCollapsed(true)
@@ -72,7 +71,6 @@ export function AdaptiveSidebar({ userRole, className }: AdaptiveSidebarProps) {
         setContextualItems(item.children)
       }
     } else if (item.href) {
-      // Direct navigation
       setActiveSection(null)
       setContextualItems([])
     }
@@ -87,6 +85,15 @@ export function AdaptiveSidebar({ userRole, className }: AdaptiveSidebarProps) {
   }
 
   const getUserDisplayName = () => {
+    if (user) {
+      const { first_name, last_name, role } = user.profile
+      if (first_name && last_name) {
+        return `${first_name} ${last_name}`
+      }
+      if (first_name) return first_name
+      return role.replace("-", " ").replace(/\b\w/g, (l) => l.toUpperCase())
+    }
+
     if (userRole === "client" && clientProfile) {
       return clientProfile.entityName || "Client"
     }
@@ -94,6 +101,12 @@ export function AdaptiveSidebar({ userRole, className }: AdaptiveSidebarProps) {
   }
 
   const getUserInitials = () => {
+    if (user?.profile.first_name && user?.profile.last_name) {
+      return `${user.profile.first_name[0]}${user.profile.last_name[0]}`.toUpperCase()
+    }
+    if (user?.profile.first_name) {
+      return user.profile.first_name.substring(0, 2).toUpperCase()
+    }
     if (userRole === "client" && clientProfile) {
       return (
         clientProfile.entityName
@@ -105,6 +118,13 @@ export function AdaptiveSidebar({ userRole, className }: AdaptiveSidebarProps) {
       )
     }
     return userRole.charAt(0).toUpperCase()
+  }
+
+  const getTenantInfo = () => {
+    if (user?.tenant) {
+      return `${user.tenant.name} • ${user.tenant.subscription_tier}`
+    }
+    return "Online"
   }
 
   return (
@@ -235,11 +255,7 @@ export function AdaptiveSidebar({ userRole, className }: AdaptiveSidebarProps) {
               {!isCollapsed && (
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-slate-900 truncate">{getUserDisplayName()}</p>
-                  <p className="text-xs text-slate-500 truncate">
-                    {userRole === "client" && clientProfile?.entityType
-                      ? `${clientProfile.entityType.replace("-", " ")} • Online`
-                      : "Online"}
-                  </p>
+                  <p className="text-xs text-slate-500 truncate">{getTenantInfo()}</p>
                 </div>
               )}
             </div>
@@ -247,12 +263,7 @@ export function AdaptiveSidebar({ userRole, className }: AdaptiveSidebarProps) {
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => {
-                  localStorage.removeItem("userRole")
-                  localStorage.removeItem("userName")
-                  localStorage.removeItem("clientProfile")
-                  window.location.href = "/auth"
-                }}
+                onClick={signOut}
                 className="h-8 w-8 p-0 text-slate-500 hover:text-slate-700 hover:bg-slate-100"
               >
                 <LogOut className="h-4 w-4" />

@@ -117,7 +117,7 @@ const mockTemplates: DocumentTemplate[] = [
   },
 ]
 
-export default function DocumentTemplates() {
+const DocumentTemplates = () => {
   const [searchTerm, setSearchTerm] = useState("")
   const [categoryFilter, setCategoryFilter] = useState<string>("all")
   const [priorityFilter, setPriorityFilter] = useState<string>("all")
@@ -311,7 +311,7 @@ export default function DocumentTemplates() {
           <CardContent className="text-center py-8">
             <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
             <p className="text-gray-500">No templates found matching your criteria</p>
-            <Button variant="outline" className="mt-4">
+            <Button variant="outline" className="mt-4 bg-transparent">
               <Plus className="h-4 w-4 mr-2" />
               Create New Template
             </Button>
@@ -321,3 +321,5 @@ export default function DocumentTemplates() {
     </div>
   )
 }
+
+export { DocumentTemplates }

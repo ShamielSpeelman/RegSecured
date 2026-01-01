@@ -17,18 +17,116 @@ interface TreeNode {
   children?: TreeNode[]
 }
 
-// Simplified structure based on standard Next.js project layout
+// Static project structure based on the actual files in the project
 const projectStructure: TreeNode = {
-  name: "project-root",
+  name: "regsecured-project",
   type: "folder",
   children: [
     {
       name: "app",
       type: "folder",
       children: [
-        { name: "globals.css", type: "file" },
+        { name: "404.tsx", type: "file" },
+        { name: "500.tsx", type: "file" },
         { name: "layout.tsx", type: "file" },
+        { name: "not-found.tsx", type: "file" },
         { name: "page.tsx", type: "file" },
+        {
+          name: "admin",
+          type: "folder",
+          children: [
+            {
+              name: "access-control",
+              type: "folder",
+              children: [
+                { name: "loading.tsx", type: "file" },
+                { name: "page.tsx", type: "file" },
+              ],
+            },
+            {
+              name: "analytics",
+              type: "folder",
+              children: [
+                { name: "loading.tsx", type: "file" },
+                { name: "page.tsx", type: "file" },
+              ],
+            },
+            { name: "audit", type: "folder", children: [{ name: "page.tsx", type: "file" }] },
+            { name: "bi", type: "folder", children: [{ name: "page.tsx", type: "file" }] },
+            { name: "compliance", type: "folder", children: [{ name: "page.tsx", type: "file" }] },
+            { name: "features", type: "folder", children: [{ name: "page.tsx", type: "file" }] },
+            { name: "global-config", type: "folder", children: [{ name: "page.tsx", type: "file" }] },
+            { name: "insights", type: "folder", children: [{ name: "page.tsx", type: "file" }] },
+            {
+              name: "marketplace",
+              type: "folder",
+              children: [
+                { name: "loading.tsx", type: "file" },
+                { name: "page.tsx", type: "file" },
+              ],
+            },
+            { name: "marketplace-extensibility", type: "folder", children: [{ name: "page.tsx", type: "file" }] },
+            {
+              name: "modules",
+              type: "folder",
+              children: [
+                { name: "loading.tsx", type: "file" },
+                { name: "page.tsx", type: "file" },
+              ],
+            },
+            { name: "monitoring", type: "folder", children: [{ name: "page.tsx", type: "file" }] },
+            {
+              name: "organizations",
+              type: "folder",
+              children: [
+                { name: "loading.tsx", type: "file" },
+                { name: "page.tsx", type: "file" },
+              ],
+            },
+            { name: "regulatory", type: "folder", children: [{ name: "page.tsx", type: "file" }] },
+            { name: "risk", type: "folder", children: [{ name: "page.tsx", type: "file" }] },
+            {
+              name: "role-templates",
+              type: "folder",
+              children: [
+                { name: "loading.tsx", type: "file" },
+                { name: "page.tsx", type: "file" },
+              ],
+            },
+            { name: "security", type: "folder", children: [{ name: "page.tsx", type: "file" }] },
+            { name: "security-compliance", type: "folder", children: [{ name: "page.tsx", type: "file" }] },
+            {
+              name: "tenants",
+              type: "folder",
+              children: [
+                { name: "loading.tsx", type: "file" },
+                { name: "page.tsx", type: "file" },
+              ],
+            },
+            { name: "usage", type: "folder", children: [{ name: "page.tsx", type: "file" }] },
+            {
+              name: "users",
+              type: "folder",
+              children: [
+                { name: "loading.tsx", type: "file" },
+                { name: "page.tsx", type: "file" },
+              ],
+            },
+            { name: "versions", type: "folder", children: [{ name: "page.tsx", type: "file" }] },
+          ],
+        },
+        {
+          name: "dashboard",
+          type: "folder",
+          children: [
+            { name: "admin", type: "folder", children: [{ name: "page.tsx", type: "file" }] },
+            { name: "analyst", type: "folder", children: [{ name: "page.tsx", type: "file" }] },
+            { name: "client", type: "folder", children: [{ name: "page.tsx", type: "file" }] },
+            { name: "relationship-manager", type: "folder", children: [{ name: "page.tsx", type: "file" }] },
+            { name: "reviewer", type: "folder", children: [{ name: "page.tsx", type: "file" }] },
+            { name: "superadmin", type: "folder", children: [{ name: "page.tsx", type: "file" }] },
+          ],
+        },
       ],
     },
     {
@@ -38,15 +136,25 @@ const projectStructure: TreeNode = {
         {
           name: "shared",
           type: "folder",
-          children: [{ name: "project-structure-sheet.tsx", type: "file" }],
+          children: [
+            { name: "cta-section.tsx", type: "file" },
+            { name: "feature-card.tsx", type: "file" },
+            { name: "hero-section.tsx", type: "file" },
+            { name: "project-structure-sheet.tsx", type: "file" },
+          ],
         },
         {
           name: "ui",
           type: "folder",
+          children: [{ name: "button-consistent.tsx", type: "file" }],
+        },
+        {
+          name: "layout",
+          type: "folder",
           children: [
-            { name: "button.tsx", type: "file" },
-            { name: "card.tsx", type: "file" },
-            { name: "sheet.tsx", type: "file" },
+            { name: "dashboard-layout.tsx", type: "file" },
+            { name: "footer.tsx", type: "file" },
+            { name: "header.tsx", type: "file" },
           ],
         },
       ],
@@ -54,12 +162,36 @@ const projectStructure: TreeNode = {
     {
       name: "lib",
       type: "folder",
-      children: [{ name: "utils.ts", type: "file" }],
+      children: [
+        {
+          name: "document-definitions",
+          type: "folder",
+          children: [{ name: "document-requirements.ts", type: "file" }],
+        },
+        {
+          name: "form-definitions",
+          type: "folder",
+          children: [
+            { name: "foundation-forms.ts", type: "file" },
+            { name: "individual-forms.ts", type: "file" },
+            { name: "legal-entity-forms.ts", type: "file" },
+            { name: "trust-forms.ts", type: "file" },
+          ],
+        },
+        {
+          name: "form-orchestration",
+          type: "folder",
+          children: [{ name: "form-orchestrator.ts", type: "file" }],
+        },
+        {
+          name: "types",
+          type: "folder",
+          children: [{ name: "entities.ts", type: "file" }],
+        },
+        { name: "navigation-config.ts", type: "file" },
+      ],
     },
-    { name: "next.config.mjs", type: "file" },
-    { name: "package.json", type: "file" },
-    { name: "tailwind.config.ts", type: "file" },
-    { name: "tsconfig.json", type: "file" },
+    { name: "README.md", type: "file" },
   ],
 }
 
