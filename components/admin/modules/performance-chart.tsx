@@ -1,8 +1,8 @@
 "use client"
 
+import dynamic from "next/dynamic"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
-import { Area, AreaChart, CartesianGrid, ResponsiveContainer, XAxis, YAxis } from "recharts"
+import { ChartContainer } from "@/components/ui/chart"
 import { Activity } from "lucide-react"
 import type { PerformanceMetric } from "@/lib/data/modules-data"
 
@@ -25,6 +25,27 @@ const chartConfig = {
   },
 }
 
+const RechartsChart = dynamic(
+  () =>
+    import("recharts").then((mod) => {
+      const { AreaChart, Area, XAxis, YAxis, CartesianGrid, ResponsiveContainer } = mod
+      return {
+        default: ({ data }: { data: PerformanceMetric[] }) => (
+          <ResponsiveContainer width="100%" height="100%">
+            <AreaChart data={data}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="time" />
+              <YAxis />
+              <Area type="monotone" dataKey="cpu" stroke="#3b82f6" fill="#3b82f6" fillOpacity={0.3} />
+              <Area type="monotone" dataKey="memory" stroke="#10b981" fill="#10b981" fillOpacity={0.3} />
+            </AreaChart>
+          </ResponsiveContainer>
+        ),
+      }
+    }),
+  { ssr: false },
+)
+
 export function PerformanceChart({ data }: PerformanceChartProps) {
   return (
     <Card>
@@ -37,16 +58,7 @@ export function PerformanceChart({ data }: PerformanceChartProps) {
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig} className="h-80">
-          <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={data}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="time" />
-              <YAxis />
-              <ChartTooltip content={<ChartTooltipContent />} />
-              <Area type="monotone" dataKey="cpu" stroke="#3b82f6" fill="#3b82f6" fillOpacity={0.3} />
-              <Area type="monotone" dataKey="memory" stroke="#10b981" fill="#10b981" fillOpacity={0.3} />
-            </AreaChart>
-          </ResponsiveContainer>
+          <RechartsChart data={data} />
         </ChartContainer>
       </CardContent>
     </Card>
